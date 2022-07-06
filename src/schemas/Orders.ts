@@ -1,6 +1,6 @@
 import {Schema, model} from "mongoose"
 
-const userSchema = new Schema({
+const orderSchema = new Schema({
     status:{
 			type:Boolean,
 			required:true
@@ -17,4 +17,4 @@ const userSchema = new Schema({
   { timestamps: true }
 );
 
-export default model("orders", userSchema);
+export default model("orders", orderSchema);

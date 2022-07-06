@@ -6,6 +6,7 @@ export type Product = {
   category?: String;
   image?:String;
   description?:String;
+  release_date?:Date;
   
 };
 
@@ -40,7 +41,7 @@ export class ProductDBContext{
             return product;
           }
 
-          const result = await model.create({name:p.product_name, price: p.price,category:p.category, quantity: 1})
+          const result = await model.create({name:p.product_name, price: p.price,category:p.category, quantity: 1,image:p.image,release_date:p.release_date})
           return result
           
     

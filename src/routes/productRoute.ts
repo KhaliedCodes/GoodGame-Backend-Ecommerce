@@ -34,7 +34,7 @@ productRouter.get("/index", async (req: Request, res: Response) => {
   });
 
 
-productRouter.post("/create",authenticate,body('product_name').isAlpha(),body('price').isNumeric(), async (req: Request,res: Response)=>{
+productRouter.post("/create",authenticate,body('price').isNumeric(), async (req: Request,res: Response)=>{
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({errors: errors.array()});
