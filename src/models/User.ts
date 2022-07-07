@@ -16,10 +16,6 @@ const saltRounds = process.env.SALT_ROUNDS as string;
 export class UserDBContext {
   async index() {
     try {
-      // const conn = await client.connect();
-      // const sql = "SELECT * FROM users";
-      // const result = await conn.query(sql);
-      // conn.release();
       console.log("Do you come here?");
       const result = await model.find({})
       
@@ -31,11 +27,7 @@ export class UserDBContext {
   async show(id: string) {
     
     try {
-      // const conn = await client.connect();
-      // const sql = "SELECT * FROM users WHERE id = $1";
       const result = await model.findById(id)
-      // const result = await conn.query(sql, [id]);
-      // conn.release();
       
       return result;
     } catch (err) {

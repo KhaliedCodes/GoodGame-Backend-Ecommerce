@@ -1,6 +1,6 @@
 import {Schema, model} from "mongoose"
 
-const orderSchema = new Schema({
+export const orderSchema = new Schema({
     status:{
 			type:Boolean,
 			required:true

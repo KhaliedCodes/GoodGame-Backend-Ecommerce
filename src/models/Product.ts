@@ -1,3 +1,4 @@
+import { ObjectId } from "mongoose";
 import model from "../schemas/Products"
 export type Product = {
   id: String;
@@ -46,6 +47,16 @@ export class ProductDBContext{
           
     
           
+        } catch (err) {
+          throw new Object(err);
+        }
+      }
+      async delete(product_id: string){
+        try {
+          const product = await model.findByIdAndRemove(product_id)
+          
+          return product
+
         } catch (err) {
           throw new Object(err);
         }

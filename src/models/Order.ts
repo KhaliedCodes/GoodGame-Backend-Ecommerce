@@ -13,11 +13,6 @@ export type Order = {
 export class OrderDBContext {
   async index(user_id: string){
     try {
-      // const conn = await client.connect();
-      // const sql = "SELECT * FROM orders WHERE users_id = $1";
-      // const result = await conn.query(sql, [user_id]);
-      // conn.release();
-      console.log(user_id);
       const result = await model.find({user_id:user_id})
       return result;
     } catch (err) {
@@ -33,7 +28,7 @@ export class OrderDBContext {
 
       return result;
     } catch (error) {
-      throw new Error(`unable to create order: ${error}`);
+      throw new Object(error);
     }
   }
 
@@ -47,8 +42,8 @@ export class OrderDBContext {
       }
       
       return result;
-    } catch (err) {
-      throw new Error(`unable create order: ${err}`);
+    } catch (error) {
+      throw new Object(error);
     }
   }
 }

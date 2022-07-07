@@ -4,9 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "npx nodemon src/server.ts",
-    "test": "npx db-migrate db:create test_db && npx db-migrate --env test up && npx tsc && npx cross-env ENV=test npx jasmine && npx db-migrate db:drop test_db",
-    "build": "npx tsc"
+    "start": "node server.js"
   },
   "author": "Udacity",
   "license": "ISC",
@@ -14,6 +12,7 @@
     "@types/express": "^4.17.9",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^14.3.2",
     "express": "^4.17.1",
@@ -24,6 +23,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
     "@types/nodemon": "^1.19.1",
