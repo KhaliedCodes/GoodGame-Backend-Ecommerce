@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "npx nodemon src/server.ts"
   },
   "author": "Udacity",
   "license": "ISC",

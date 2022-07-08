@@ -10,8 +10,8 @@ export type Wishlist = {
 export class WishlistDBContext {
   async index(user_id: string){
     try {
-      const result = await model.find({user_id:user_id})
-      return result;
+      const result = await model.findOne({user_id:user_id})
+      return result?.products;
     } catch (err) {
       throw new Object(err);
     }

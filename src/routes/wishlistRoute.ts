@@ -1,5 +1,5 @@
 import { Router, Request, Response} from "express";
-import { Wishlist, WishlistDBContext } from "../models/Wishlist";
+import { WishlistDBContext } from "../models/Wishlist";
 import authenticate from "../middlewares/authenticate";
 import jwt, { JwtPayload } from "jsonwebtoken"
 const context = new WishlistDBContext();
@@ -13,8 +13,8 @@ wishlistRouter.get("/index",authenticate, async (req: Request,res: Response)=>{
     const payload = jwt.decode(req.headers.token as string) as JwtPayload
     
     
-    const orders = await context.index(payload.id )
-    res.status(200).json(orders)
+    const wishlist = await context.index(payload.id )
+    res.status(200).json(wishlist )
   } catch(err) {
     res.status(400).json({err})
   }
