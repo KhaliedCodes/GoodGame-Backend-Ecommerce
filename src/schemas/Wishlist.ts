@@ -1,11 +1,12 @@
 import { Schema, model } from "mongoose"
+import { productSchema } from "./Products";
 
 const wishlistSchema = new Schema({
 	user_id: {
 		type:String,
 		required:true
 	},
-	products:[String]
+	products:[productSchema]
 },
 	{ timestamps: true }
 );

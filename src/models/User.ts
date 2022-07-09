@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import model from '../schemas/Users'
 dotenv.config();
+
 export type User = {
   id: string;
   email:String;
@@ -9,6 +10,9 @@ export type User = {
   firstname?: String;
   lastname?: String;
   password: String;
+  phone?:String;
+  role: Number;
+  address: [String]
 };
 const pepper = process.env.BCRYPT_PASSWORD as string;
 const saltRounds = process.env.SALT_ROUNDS as string;
@@ -35,11 +39,16 @@ export class UserDBContext {
     }
   }
   async create(u: User) {
-    console.log(u);
+    
     try {
       const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds));
-      const result = await model.create({username:u.username,password: hash,email:u.email})
-
+      const result = await model.create({username:u.username,
+                                          password: hash,
+                                          email:u.email, 
+                                          phone:u.phone,
+                                          firstName: u.firstname,
+                                          lastName: u.lastname,
+                                          role:u.role})
 
       return result;
     } catch (err) {

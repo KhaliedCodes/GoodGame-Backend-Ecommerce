@@ -18,17 +18,14 @@ export const userSchema = new Schema({
 		password:{
 			type:String,
 			required:true,
-			validate: {
-				validator: function(v:string) {
-					return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(v);
-				},
-				message: `Password is not valid `
-			}
+			
 		},
     email: {
       type: String,
 			required: true,
 			unique: true,
+			sparse: true,
+			trim:true,
 			validate: {
 				validator: function(v:string) {
 					return /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/.test(v);
@@ -42,14 +39,18 @@ export const userSchema = new Schema({
 		lastName:String,
 		phone:{
 			type: String,
+			sparse: true,
 			unique: true,
 			validate:{
-				validator: function(v:string){
-					return /^01[0-2]{1}[0-9]{8}/.test(v)
+				validator: (v:string)=>{
+					console.log(v);
+					
+					return v ?/^01[0-2]{1}[0-9]{8}$/.test(v):true
 				},
 				message:'Phone is not correct'
 			}
 		},
+		role: {type:Number, required: true},
 		address:[String]
   },
   { timestamps: true }

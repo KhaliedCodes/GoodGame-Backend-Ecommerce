@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
 import { ProductDBContext } from "../models/Product";
-import authenticate from "../middlewares/authenticate";
-import {query,body} from "express-validator"
+import {body} from "express-validator"
 import { validationResult } from "express-validator/src/validation-result";
+import {  authenticateConsumer } from "../middlewares/authenticate";
 const context = new ProductDBContext();
 
 const productRouter = Router();
@@ -31,7 +31,7 @@ productRouter.get("/index", async (req: Request, res: Response) => {
   });
 
 
-productRouter.post("/create",authenticate,body('price').isNumeric(), async (req: Request,res: Response)=>{
+productRouter.post("/create",authenticateConsumer,body('price').isNumeric(), async (req: Request,res: Response)=>{
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({errors: errors.array()});
@@ -44,7 +44,7 @@ productRouter.post("/create",authenticate,body('price').isNumeric(), async (req:
     }
 })
 
-productRouter.delete("/delete/:product_id",authenticate, async (req: Request,res: Response)=>{
+productRouter.delete("/delete/:product_id",authenticateConsumer, async (req: Request,res: Response)=>{
     try {
       const removedProduct = await context.delete(req.params.product_id)
       res.status(200).json(removedProduct)

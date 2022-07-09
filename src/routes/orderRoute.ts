@@ -1,14 +1,14 @@
 import { Router, Request, Response} from "express";
 import { Order, OrderDBContext } from "../models/Order";
-import authenticate from "../middlewares/authenticate";
 import jwt, { JwtPayload } from "jsonwebtoken"
 import { validationResult } from "express-validator/src/validation-result";
+import { authenticateConsumer } from "../middlewares/authenticate";
 const context = new OrderDBContext();
 
 const orderRouter = Router();
 export default orderRouter
 
-orderRouter.get("/index",authenticate, async (req: Request,res: Response)=>{
+orderRouter.get("/index",authenticateConsumer, async (req: Request,res: Response)=>{
   
   try {
     const payload = jwt.decode(req.headers.token as string) as JwtPayload
@@ -21,7 +21,7 @@ orderRouter.get("/index",authenticate, async (req: Request,res: Response)=>{
   }
 })
 
-orderRouter.post("/complete",authenticate, async (req: Request,res: Response)=>{
+orderRouter.post("/complete",authenticateConsumer, async (req: Request,res: Response)=>{
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({errors: errors.array()});
@@ -36,7 +36,7 @@ orderRouter.post("/complete",authenticate, async (req: Request,res: Response)=>{
   }
 })
 
-orderRouter.post("/create",authenticate, async (req: Request,res: Response)=>{
+orderRouter.post("/create",authenticateConsumer, async (req: Request,res: Response)=>{
   
     try {
       const payload = jwt.decode(req.headers.token as string) as JwtPayload

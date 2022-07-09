@@ -1,6 +1,7 @@
-import { Schema, model } from "mongoose"
+import mongoose, { Schema, model } from "mongoose"
 
 export const productSchema = new Schema({
+	_id: mongoose.Types.ObjectId,
 	name: {
 		type: String,
 		required: true,
