@@ -35,17 +35,12 @@ userRouter.post("/create",body('username').isLength({min:4, max:20,}),
   
   try {
     const user = await context.create(req.body);
-    if(user)
-    if(req.body.rememebered){
-      
-      
-      const token = jwt.sign({id: user.id, username: user.username, role:roles[user.role]}, process.env.TOKEN_SECRET as string,{expiresIn:60*60});
-      res.status(201).json(token);
-    }else{
-      console.log(roles[user.role]);
+    if(user){
       const token = jwt.sign({id: user.id, username: user.username, role:roles[user.role]}, process.env.TOKEN_SECRET as string);
-      res.status(201).json(token);
+      const user_info = {id:user._id,username: user.username, email:user.email, role: roles[user.role].role }
+      res.status(201).json({token,user_info});
     }
+      
     
     
   } catch (err) {
@@ -64,8 +59,17 @@ userRouter.post("/login",body('username').isLength({min:5, max:20}), body('passw
   const user = await context.authenticate(username, password);
   if (user) {
     
-    const token = jwt.sign({id: user.id, username: user.username}, process.env.TOKEN_SECRET as string);
-    res.status(200).json({token,user});
+    
+    if(!req.body.rememebered){
+      const token = jwt.sign({id: user.id, username: user.username, role:roles[user.role]}, process.env.TOKEN_SECRET as string,{expiresIn:60*60});
+      const user_info = {id:user._id,username: user.username, email:user.email, role: roles[user.role].role }
+      res.status(201).json({token,user_info});
+    }else{
+      const token = jwt.sign({id: user.id, username: user.username, role:roles[user.role]}, process.env.TOKEN_SECRET as string);
+      const user_info = {id:user._id,username: user.username, email:user.email, role: roles[user.role].role }
+      res.status(201).json({token,user_info});
+    }
+    
   } else {
     res.status(400).json({ error: "Login failed" });
   }

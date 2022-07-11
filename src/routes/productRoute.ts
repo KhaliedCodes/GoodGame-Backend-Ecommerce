@@ -11,6 +11,8 @@ export default productRouter
 productRouter.get("/index", async (req: Request, res: Response) => {
   
     const products = await context.index();
+    console.log(req.headers.token);
+    
     res.json(products);
   });
   

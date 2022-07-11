@@ -7,7 +7,6 @@ dotenv.config()
 export  function authenticateConsumer( req : Request, res: Response, next: NextFunction){
     try{
         jwt.verify(req.headers.token as string, process.env.TOKEN_SECRET as string,(err,decoded)=>{
-            console.log(decoded);
             if(err){
                 return res.status(401).json({err});
             }

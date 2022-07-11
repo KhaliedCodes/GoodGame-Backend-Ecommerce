@@ -10,6 +10,8 @@ export default wishlistRouter
 wishlistRouter.get("/index",authenticateConsumer, async (req: Request,res: Response)=>{
   
   try {
+    console.log(req.headers);
+    
     const payload = jwt.decode(req.headers.token as string) as JwtPayload
     
     
