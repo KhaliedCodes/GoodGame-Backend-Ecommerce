@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
-import { ObjectId } from "mongoose";
 import model from "../schemas/Wishlist"
 import productModel from "../schemas/Products"
-import { Product } from "./Product";
 
 dotenv.config();
 export type Wishlist = {
@@ -33,8 +31,8 @@ export class WishlistDBContext {
           
             return wishlist.products
           }
-          await wishlist.updateOne({$push:{products:product}})
-          const result = await model.findOne({user_id:user_id})
+          const result =await wishlist.updateOne({$push:{products:product}},{new:true})
+           
            
           return result?.products
         }

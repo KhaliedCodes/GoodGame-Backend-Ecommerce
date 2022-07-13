@@ -4,7 +4,7 @@ import model from '../schemas/Users'
 dotenv.config();
 
 export type User = {
-  id: string;
+  id: String;
   email:String;
   username: String;
   firstname?: String;
@@ -42,12 +42,12 @@ export class UserDBContext {
     
     try {
       const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds));
-      const result = await model.create({username:u.username,
+      const result = await model.create({username:u.username.toLocaleLowerCase(),
                                           password: hash,
-                                          email:u.email, 
+                                          email:u.email.toLocaleLowerCase(), 
                                           phone:u.phone,
-                                          firstName: u.firstname,
-                                          lastName: u.lastname,
+                                          firstName: u.firstname?.toLocaleLowerCase(),
+                                          lastName: u.lastname?.toLocaleLowerCase(),
                                           role:u.role})
 
       return result;
@@ -55,8 +55,21 @@ export class UserDBContext {
       throw new Object(err);
     }
   }
+  async update(user_id:string, user:User ){
+
+
+    console.log(user);
+    const result = await model.findByIdAndUpdate(user_id,{username:user.username.toLocaleLowerCase(), 
+                                                  email:user.email.toLocaleLowerCase(), 
+                                                  firstName:user.firstname?.toLocaleLowerCase(), 
+                                                  lastName:user.lastname?.toLocaleLowerCase()},{new:true}).catch(err=>{throw new Object(err)})
+    
+      
+    return result
+
+  }
   async authenticate(username: string, password: string) {
-    const result = await model.findOne({username: username})
+    const result = await model.findOne({username: username.toLocaleLowerCase()})
     if(result) {
         const user = result   
         if (bcrypt.compareSync(password+pepper, user.password)) {

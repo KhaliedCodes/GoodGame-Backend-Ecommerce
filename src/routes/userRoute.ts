@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-import { UserDBContext } from "../models/User";
+import { User, UserDBContext } from "../models/User";
 import jwt from "jsonwebtoken";
 import {authenticateAdmin, authenticateConsumer} from "../middlewares/authenticate"
-import dotenv from "dotenv"
+import dotenv from 'dotenv'
 import {body} from "express-validator"
 import { validationResult } from "express-validator/src/validation-result";
 import { roles } from "../interfaces/role";
@@ -74,6 +74,23 @@ userRouter.post("/login",body('username').isLength({min:5, max:20}), body('passw
     res.status(400).json({ error: "Login failed" });
   }
 });
+
+userRouter.patch("/:id",  async (req: Request, res: Response) => {
+  
+  try {
+    
+    const user = await context.update(req.params.id as string,req.body as unknown as User);
+    if(user)
+      res.status(200).json(user);
+    else
+      res.status(400).json({Error: "User not found"})
+
+  } catch (err) {
+    return res.status(401).json(err);
+  }
+  
+});
+
 userRouter.get("/:id",  async (req: Request, res: Response) => {
   
   try {

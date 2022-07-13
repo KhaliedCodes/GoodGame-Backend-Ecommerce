@@ -16,8 +16,11 @@ export const productSchema = new Schema({
 	category: [{ type: String, required: true }],
 	image: String,
 	quantity: { type: Number, required: true },
-	release_date: { type: Date}
+	release_date: { type: Date},
+	videoLinl:String
+
 },
+
 	{ timestamps: true }
 );
 
