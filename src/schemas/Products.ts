@@ -17,7 +17,8 @@ export const productSchema = new Schema({
 	image: String,
 	quantity: { type: Number, required: true },
 	release_date: { type: Date},
-	videoLinl:String
+	videoLink:String,
+	rating:{type:Number, min:1, max: 5}
 
 },
 

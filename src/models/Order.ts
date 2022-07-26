@@ -19,9 +19,14 @@ export class OrderDBContext {
       throw new Object(err);
     }
   }
+  async one(user_id: string,order_id:string){
+    
+      const result = await model.findOne({user_id:user_id,_id: order_id}).catch((error)=>{throw new Object(error)})
+      return result;
+    
+  }
   async create(order: Order) {
     try {
-      order.status = false
       const result = await model.create(order)
       
       

@@ -21,6 +21,19 @@ orderRouter.get("/index",authenticateConsumer, async (req: Request,res: Response
   }
 })
 
+orderRouter.get("/:order_id",authenticateConsumer, async (req: Request,res: Response)=>{
+  
+  try {
+    const payload = jwt.decode(req.headers.token as string) as JwtPayload
+    
+    
+    const orders = await context.one(payload.id,req.params.order_id)
+    res.status(200).json(orders)
+  } catch(err) {
+    res.status(400).json({err})
+  }
+})
+
 orderRouter.post("/complete",authenticateConsumer, async (req: Request,res: Response)=>{
   const errors = validationResult(req);
     if (!errors.isEmpty()) {

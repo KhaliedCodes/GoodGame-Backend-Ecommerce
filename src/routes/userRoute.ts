@@ -75,7 +75,7 @@ userRouter.post("/login",body('username').isLength({min:5, max:20}), body('passw
   }
 });
 
-userRouter.patch("/:id",  async (req: Request, res: Response) => {
+userRouter.patch("/:id", authenticateConsumer, async (req: Request, res: Response) => {
   
   try {
     
@@ -91,7 +91,7 @@ userRouter.patch("/:id",  async (req: Request, res: Response) => {
   
 });
 
-userRouter.get("/:id",  async (req: Request, res: Response) => {
+userRouter.get("/:id", authenticateConsumer, async (req: Request, res: Response) => {
   
   try {
     
@@ -102,7 +102,7 @@ userRouter.get("/:id",  async (req: Request, res: Response) => {
       res.status(400).json({Error: "User not found"})
 
   } catch (err) {
-    return res.status(401).json({ Error: err });
+    return res.status(401).json(err);
   }
   
 });
